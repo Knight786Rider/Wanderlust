@@ -625,3 +625,10 @@ footer {
 .suggestion-item:hover {
   background-color: #f8f9fa;
 }
+
+.container {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
