@@ -115,9 +115,10 @@ app.use("/", userRouter);
 //   res.send("successful testing");
 // });
 
-app.all("*",(req,res,next)=>{
-  next(new ExpressError(404,"Page not found!"))
-})
+app.use((req, res) => {
+    res.status(404).render("error.ejs");
+});
+
 
 app.use((err,req,res,next)=>{
   let{statusCode=500,message="something went wrong"}=err;
