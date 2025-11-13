@@ -1,0 +1,124 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+  <h2 class="mb-4 fw-semibold text-center">Edit Listing</h2>
+
+  <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label fw-semibold">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="listing[title]"
+        class="form-control"
+        value="<%= listing.title %>"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label fw-semibold">Description</label>
+      <textarea
+        id="description"
+        name="listing[description]"
+        class="form-control"
+        rows="3"
+        required
+      ><%= listing.description %></textarea>
+    </div>
+
+    <!-- Price -->
+    <div class="mb-3">
+      <label for="price" class="form-label fw-semibold">Price per night (₹)</label>
+      <input
+        type="number"
+        id="price"
+        name="listing[price]"
+        class="form-control"
+        value="<%= listing.price %>"
+        required
+      />
+    </div>
+
+    <!-- Location -->
+    <div class="mb-3">
+      <label for="location" class="form-label fw-semibold">Location</label>
+      <input
+        type="text"
+        id="location"
+        name="listing[location]"
+        class="form-control"
+        value="<%= listing.location %>"
+        required
+      />
+    </div>
+
+    <!-- Country -->
+    <div class="mb-3">
+      <label for="country" class="form-label fw-semibold">Country</label>
+      <input
+        type="text"
+        id="country"
+        name="listing[country]"
+        class="form-control"
+        value="<%= listing.country %>"
+        required
+      />
+    </div>
+
+    <!-- Category -->
+    <div class="mb-3">
+      <label for="category" class="form-label fw-semibold">Category</label>
+      <select id="category" name="listing[category]" class="form-select">
+        <option <%= listing.category === "Farms" ? "selected" : "" %>>Farms</option>
+        <option <%= listing.category === "Rooms" ? "selected" : "" %>>Rooms</option>
+        <option <%= listing.category === "Amazing Views" ? "selected" : "" %>>Amazing Views</option>
+        <option <%= listing.category === "Iconic Cities" ? "selected" : "" %>>Iconic Cities</option>
+        <option <%= listing.category === "Surfing" ? "selected" : "" %>>Surfing</option>
+        <option <%= listing.category === "Amazing Pools" ? "selected" : "" %>>Amazing Pools</option>
+        <option <%= listing.category === "Beach" ? "selected" : "" %>>Beach</option>
+        <option <%= listing.category === "Cabins" ? "selected" : "" %>>Cabins</option>
+        <option <%= listing.category === "Lakefront" ? "selected" : "" %>>Lakefront</option>
+      </select>
+    </div>
+
+    <!-- Existing Image -->
+    <% if (listing.image && listing.image.url) { %>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Current Image</label><br/>
+        <img
+          src="<%= listing.image.url %>"
+          alt="<%= listing.title %>"
+          class="img-fluid rounded mb-2 shadow-sm"
+          style="max-height: 250px; object-fit: cover;"
+        />
+      </div>
+    <% } %>
+
+    <!-- Upload New Image -->
+    <div class="mb-3">
+      <label for="imageFile" class="form-label fw-semibold">Replace Image</label>
+      <input
+        type="file"
+        id="imageFile"
+        name="imageFile"
+        accept="image/*"
+        class="form-control"
+      />
+      <small class="text-muted">Leave blank to keep the current image.</small>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-between mt-4">
+      <a href="/listings/<%= listing._id %>" class="btn btn-outline-secondary px-4">
+        Cancel
+      </a>
+      <button type="submit" class="btn btn-dark px-4">
+        Save Changes
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top shadow-sm py-2">
+  <div class="container-fluid px-4">
+    
+    <!-- Left: Brand -->
+    <a class="navbar-brand fw-bold text-danger fs-4 d-flex align-items-center" href="/">
+      <i class="fa-regular fa-compass me-2"></i>WanderLust
+    </a>
+
+    <!-- Center: Airbnb-style Search Bar -->
+    <form class="search-bar position-absolute top-50 start-50 translate-middle d-none d-lg-flex align-items-center justify-content-between px-3">
+      <div class="search-item">
+        <span class="search-label">Where</span>
+        <input type="text" class="search-input" placeholder="Search destinations" />
+      </div>
+      <div class="divider"></div>
+      <div class="search-item">
+        <span class="search-label">Check in</span>
+        <input type="text" class="search-input" placeholder="Add dates" />
+      </div>
+      <div class="divider"></div>
+      <div class="search-item">
+        <span class="search-label">Check out</span>
+        <input type="text" class="search-input" placeholder="Add dates" />
+      </div>
+      <div class="divider"></div>
+      <div class="search-item">
+        <span class="search-label">Who</span>
+        <input type="text" class="search-input" placeholder="Add guests" />
+      </div>
+      <button class="search-btn ms-2">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+
+    <!-- Right: Links -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavAltMarkup"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto align-items-center">
+        <a class="nav-link fw-medium" href="/">Home</a>
+        <a class="nav-link fw-medium" href="/listings">All Listings</a>
+        <a class="nav-link fw-medium" href="/listings/new">Add New</a>
+        <% if (!currentUser) { %>
+          <a class="nav-link fw-medium" href="/signup">Sign Up</a>
+          <a class="nav-link fw-medium" href="/login">Log In</a>
+        <% } else { %>
+          <a class="nav-link fw-medium" href="/logout">Log Out</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

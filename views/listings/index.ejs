@@ -1,0 +1,210 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Airbnb-style Filter Bar -->
+<div class="category-bar d-flex align-items-center justify-content-between px-4 py-3 border-bottom bg-white">
+  <div class="d-flex flex-wrap gap-3 align-items-center" id="categoryContainer">
+    <% 
+      // categories used in server-side render for initial page load
+      const categories = [
+        { name: "All", icon: "fa-globe" },
+        { name: "Farms", icon: "fa-tractor" },
+        { name: "Rooms", icon: "fa-bed" },
+        { name: "Amazing Views", icon: "fa-mountain-sun" },
+        { name: "Iconic Cities", icon: "fa-city" },
+        { name: "Surfing", icon: "fa-person-swimming" },
+        { name: "Amazing Pools", icon: "fa-water-ladder" },
+        { name: "Beach", icon: "fa-umbrella-beach" },
+        { name: "Cabins", icon: "fa-house" },
+        { name: "Lakefront", icon: "fa-water" },
+      ];
+    %>
+
+    <% for (let c of categories) { %>
+      <a href="/listings?category=<%= encodeURIComponent(c.name) %>" 
+         class="category-link <%= (typeof category !== 'undefined' && category === c.name) ? 'active' : '' %>"
+         data-category="<%= c.name %>">
+        <i class="fa-solid <%= c.icon %>"></i>
+        <span class="ms-1"><%= c.name %></span>
+      </a>
+    <% } %>
+  </div>
+
+  <div class="d-flex align-items-center gap-3">
+    <!-- Filters modal trigger -->
+    <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#filtersModal">
+      <i class="fa-solid fa-sliders me-2"></i>Filters
+    </button>
+
+    <div class="form-check form-switch ms-2">
+      <input class="form-check-input" type="checkbox" id="taxSwitch" />
+      <label class="form-check-label text-muted" for="taxSwitch">Display total before taxes</label>
+    </div>
+  </div>
+</div>
+
+<!-- Filters Modal (AJAX submits and keeps other params) -->
+<div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form id="filtersForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Filters</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Where (city or country)</label>
+          <input id="filterSearch" name="search" type="text" class="form-control" value="<%= typeof search !== 'undefined' ? search : '' %>">
+        </div>
+
+        <div class="row g-3">
+          <div class="col">
+            <label class="form-label">Check-in</label>
+            <input id="filterCheckin" name="checkin" type="date" class="form-control" value="<%= typeof checkin !== 'undefined' ? checkin : '' %>">
+          </div>
+          <div class="col">
+            <label class="form-label">Check-out</label>
+            <input id="filterCheckout" name="checkout" type="date" class="form-control" value="<%= typeof checkout !== 'undefined' ? checkout : '' %>">
+          </div>
+          <div class="col-4">
+            <label class="form-label">Guests</label>
+            <input id="filterGuests" name="guests" type="number" min="1" class="form-control" value="<%= typeof guests !== 'undefined' ? guests : 1 %>">
+          </div>
+        </div>
+
+        <hr class="my-3">
+
+        <div class="row g-3">
+          <div class="col">
+            <label class="form-label">Min price (₹)</label>
+            <input id="filterMinPrice" name="minPrice" type="number" min="0" class="form-control" value="<%= typeof minPrice !== 'undefined' ? minPrice : '' %>">
+          </div>
+          <div class="col">
+            <label class="form-label">Max price (₹)</label>
+            <input id="filterMaxPrice" name="maxPrice" type="number" min="0" class="form-control" value="<%= typeof maxPrice !== 'undefined' ? maxPrice : '' %>">
+          </div>
+          <div class="col">
+            <label class="form-label">Category</label>
+            <select id="filterCategory" name="category" class="form-select">
+              <option value="All">All</option>
+              <% for (let c of categories) { %>
+                <option value="<%= c.name %>" <%= (typeof category !== 'undefined' && category === c.name) ? 'selected' : '' %>><%= c.name %></option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="applyFiltersBtn" type="submit" class="btn btn-primary">Apply</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Container where JS will render/update listing grid -->
+<div class="container mt-4" id="listingsRoot">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4" id="listingsGrid">
+    <% for (let listing of listings) { %>
+      <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+          <img
+            src="<%= listing.image && listing.image.url ? listing.image.url : 'https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60' %>"
+            class="card-img-top"
+            style="height: 17rem; object-fit: cover;"
+          />
+          <div class="card-body">
+            <h5 class="fw-semibold"><%= listing.title %></h5>
+            <p class="text-muted mb-1"><%= listing.location %>, <%= listing.country %></p>
+            <p class="fw-semibold mb-0 price-display" data-base-price="<%= listing.price %>">₹<%= listing.price.toLocaleString("en-IN") %> night</p>
+            <p class="small text-muted mb-0">Guests: <%= listing.guests || 1 %></p>
+          </div>
+        </div>
+      </a>
+    <% } %>
+  </div>
+</div>
+
+<!-- Include AJAX filter script -->
+<script src="/js/filter.js" defer></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.querySelector(".search-bar input.search-input[placeholder='Search destinations']");
+  if (!searchInput) return;
+
+  // Create suggestion dropdown
+  const suggestionBox = document.createElement("div");
+  suggestionBox.className = "suggestion-box shadow-sm border bg-white rounded position-absolute";
+  suggestionBox.style.zIndex = "1000";
+  suggestionBox.style.width = "250px";
+  suggestionBox.style.display = "none";
+  suggestionBox.style.top = "50px";
+  suggestionBox.style.left = "0";
+  searchInput.parentElement.appendChild(suggestionBox);
+
+  let timeout = null;
+
+  // Fetch live suggestions
+  async function fetchSuggestions(query) {
+    if (!query.trim()) {
+      suggestionBox.style.display = "none";
+      return;
+    }
+
+    const res = await fetch(`/listings/search/suggestions?q=${encodeURIComponent(query)}`);
+    const data = await res.json();
+    renderSuggestions(data.suggestions);
+  }
+
+  // Render results in dropdown
+function renderSuggestions(suggestions) {
+  suggestionBox.innerHTML = "";
+  if (!suggestions.length) {
+    suggestionBox.style.display = "none";
+    return;
+  }
+
+  suggestions.forEach(s => {
+    const item = document.createElement("div");
+    item.textContent = s.text;
+    item.className = "px-3 py-2 suggestion-item";
+    item.style.cursor = "pointer";
+
+    // 🟢 When clicked, go directly to the filtered listings page
+    item.addEventListener("click", () => {
+      const location = s.text.split("—")[0].trim();
+      window.location.href = `/listings?search=${encodeURIComponent(location)}`;
+    });
+
+    suggestionBox.appendChild(item);
+  });
+
+  suggestionBox.style.display = "block";
+}
+  
+
+  // Handle typing with debounce
+  searchInput.addEventListener("input", () => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => fetchSuggestions(searchInput.value), 300);
+  });
+
+  // Hide dropdown when clicking outside
+  document.addEventListener("click", e => {
+    if (!suggestionBox.contains(e.target) && e.target !== searchInput) {
+      suggestionBox.style.display = "none";
+    }
+  });
+});
+</script>
+<script>
+document.querySelector(".search-bar").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const input = document.querySelector(".search-bar input.search-input[placeholder='Search destinations']");
+  const query = input.value.trim();
+  if (query) {
+    window.location.href = `/listings?search=${encodeURIComponent(query)}`;
+  }
+});
+</script>
+
