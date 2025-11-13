@@ -101,9 +101,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-
-
 // ✅ Create Route
 router.post("/", isLoggedIn, upload.single('imageFile'), wrapAsync(listingController.createListing));
 

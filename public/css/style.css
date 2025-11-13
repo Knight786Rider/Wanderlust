@@ -632,3 +632,13 @@ footer {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+/* === FIX RENDER ZOOM ISSUE === */
+html, body {
+    zoom: 1 !important;
+    transform: none !important;
+}
+
+.container {
+    max-width: 100% !important;
+}
