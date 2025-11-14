@@ -1,3 +1,8 @@
+html, body {
+  zoom: 1 !important;
+  transform: none !important;
+}
+
 body {
     font-family: 'Inter', sans-serif !important;
     background-color: #fff;
