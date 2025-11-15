@@ -14,12 +14,14 @@ html, body {
 }
 
 /* Fix Bootstrap container scaling on Render */
+/* Fix Render zoom scaling */
 .container {
-  max-width: 1320px;
+  max-width: 1140px;
   margin: 0 auto;
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
 
 /* -------------------------------------------------------
    NAVBAR
@@ -158,7 +160,8 @@ html, body {
 }
 
 .image-wrapper {
-  height: 240px;
+  height: 200px;
+  max-height: 32vh;
   width: 100%;
   border-radius: 20px;
   overflow: hidden;
