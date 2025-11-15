@@ -60,7 +60,7 @@ const index = async (req, res) => {
       };
     }
 
-    const listings = await Listing.find(query).lean();
+    const listings = await Listing.find(query).populate("owner").lean();
 
     // If it's an AJAX (fetch) request — return JSON instead of rendering
     if (req.xhr || req.headers.accept?.includes('json') || ajax === '1') {
