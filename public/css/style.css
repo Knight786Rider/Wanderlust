@@ -731,6 +731,6 @@ html {
     width: 100%;
     max-width: 900px;   /* limits size so image stays normal */
     height: 500px;      /* adjust height here */
-    object-fit: contain; /* important — shows full image */
+    object-fit: cover; /* important — shows full image */
     border-radius: 12px;
 }
