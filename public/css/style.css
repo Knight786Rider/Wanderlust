@@ -721,13 +721,16 @@ html {
 /* Wrapper for full-width hero image */
 /* Airbnb-style hero image */
 .show-image-wrapper {
-    width: 100vw !important;
-    margin-left: calc(50% - 50vw) !important;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: #f8f9fa; /* soft background so unused space looks good */
 }
 
 .show-page-image {
-    width: 100% !important;
-    height: 320px !important;   /* Airbnb height */
-    object-fit: cover !important;
-    border-radius: 0 !important;
+    width: 100%;
+    max-width: 900px;   /* limits size so image stays normal */
+    height: 500px;      /* adjust height here */
+    object-fit: contain; /* important — shows full image */
+    border-radius: 12px;
 }
