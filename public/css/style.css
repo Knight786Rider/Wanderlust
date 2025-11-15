@@ -647,3 +647,66 @@ html, body {
 .container {
     max-width: 100% !important;
 }
+
+/* ----------------------------------------------------
+   PERFECT 75% ZOOM SIMULATION (SAFE & RESPONSIVE)
+   ---------------------------------------------------- */
+
+/* Make the overall UI proportionally smaller */
+html {
+    font-size: 87%; /* ~75% zoom feeling but safe */
+}
+
+/* Make the whole layout wider, like zooming out */
+.container,
+.container-fluid {
+    max-width: 1650px !important;
+}
+
+/* Make cards scale slightly smaller without layout distortion */
+.card {
+    transform: scale(0.95);
+    transform-origin: top center;
+}
+
+/* Reduce card spacing and padding a bit */
+.card-body {
+    padding: 0.75rem !important;
+}
+
+/* Smaller images so they appear like the browser is zoomed out */
+.card-img-top {
+    height: 190px !important;
+    object-fit: cover;
+}
+
+/* Reduce spacing in navbar to match 75% appearance */
+.navbar {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+}
+
+/* Reduce category bar spacing */
+.category-link {
+    font-size: 0.83rem !important;
+}
+
+.category-link i {
+    font-size: 1rem !important;
+}
+
+/* Make search bar slightly thinner */
+.search-bar {
+    height: 44px !important;
+}
+
+/* Make suggestion dropdown match reduced scale */
+.suggestion-box {
+    font-size: 0.85rem !important;
+}
+
+/* Footer text slightly smaller */
+.f-info {
+    font-size: 0.85rem !important;
+}
+
