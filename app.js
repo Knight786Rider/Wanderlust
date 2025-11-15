@@ -38,6 +38,7 @@ main()
 
 async function main() {
   await mongoose.connect(dbUrl);
+  console.log("CONNECTED TO:", dbUrl);
 }
 
 app.set("view engine", "ejs");
