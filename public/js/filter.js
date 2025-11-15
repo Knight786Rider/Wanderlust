@@ -26,17 +26,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const frag = document.createDocumentFragment();
 
     listings.forEach(listing => {
+      // Build image source safe: prefer listing.image.url, fall back to listing.imageUrl (API) or placeholder
+      const imageSrc = (listing.image && listing.image.url) || listing.imageUrl || 'https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60';
+
+      const colDiv = document.createElement('div');
+      colDiv.className = 'col';
+
       const a = document.createElement('a');
       a.href = `/listings/${listing._id}`;
-      a.className = 'listing-link text-decoration-none text-dark col';
+      a.className = 'listing-link text-decoration-none text-dark';
 
       const card = document.createElement('div');
       card.className = 'card border-0 shadow-sm rounded-4 overflow-hidden h-100';
 
       const img = document.createElement('img');
-      img.src = listing.imageUrl;
+      img.src = imageSrc;
       img.className = 'card-img-top';
-      img.style.height = '17rem';
+      img.style.height = '210px'; // match the EJS rendered height
       img.style.objectFit = 'cover';
 
       const body = document.createElement('div');
@@ -73,9 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
       card.appendChild(img);
       card.appendChild(body);
       a.appendChild(card);
-
-      const colDiv = document.createElement('div');
-      colDiv.className = 'col';
       colDiv.appendChild(a);
 
       frag.appendChild(colDiv);
