@@ -2,25 +2,26 @@
 
 <div class="row">
   <div class="col-8 mx-auto mt-4">
+
     <h3>Create a New Listing</h3>
-    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+
+    <form method="POST" action="/listings" enctype="multipart/form-data">
 
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
-        <input 
-          name="listing[title]" 
-          placeholder="Enter title" 
-          type="text" 
-          class="form-control" 
-          required 
-        />
+        <label class="form-label">Title</label>
+        <input
+          name="listing[title]"
+          type="text"
+          required
+          placeholder="Enter title"
+          class="form-control"
+        >
       </div>
 
       <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
+        <label class="form-label">Description</label>
         <textarea
           name="listing[description]"
-          placeholder="Enter short description"
           class="form-control"
           rows="3"
           required
@@ -28,55 +29,53 @@
       </div>
 
       <div class="mb-3">
-        <label for="imageFile" class="form-label">Upload Image</label>
+        <label class="form-label">Upload Image</label>
         <input
-          name="imageFile"
           type="file"
+          name="imageFile"
           class="form-control"
           accept="image/*"
           required
-        />
-        <div class="form-text">
-          Upload an image file.
-        </div>
+        >
       </div>
 
       <div class="row">
+
         <div class="mb-3 col-md-4">
-          <label for="price" class="form-label">Price</label>
-          <input 
-            name="listing[price]" 
-            placeholder="Enter price"
+          <label class="form-label">Price</label>
+          <input
+            name="listing[price]"
             type="number"
-            class="form-control"
             required
-          />
+            class="form-control"
+          >
         </div>
 
         <div class="mb-3 col-md-4">
-          <label for="country" class="form-label">Country</label>
+          <label class="form-label">Country</label>
           <input
             name="listing[country]"
-            placeholder="Enter country"
             type="text"
-            class="form-control"
             required
-          />
+            class="form-control"
+          >
         </div>
 
         <div class="mb-3 col-md-4">
-          <label for="location" class="form-label">Location</label>
+          <label class="form-label">Location</label>
           <input
             name="listing[location]"
-            placeholder="Enter location"
             type="text"
-            class="form-control"
             required
-          />
+            class="form-control"
+          >
         </div>
+
       </div>
 
-      <button class="btn btn-dark mt-3">Add Listing</button>
+      <button class="btn btn-dark mt-3">Create Listing</button>
+
     </form>
+
   </div>
 </div>

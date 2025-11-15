@@ -1,8 +1,11 @@
 <% layout("/layouts/boilerplate") %>
 
-<!-- Airbnb-style Filter Bar -->
+<!-- Airbnb-style Category & Filter Bar -->
 <div class="category-bar d-flex align-items-center justify-content-between px-4 py-3 border-bottom bg-white w-100">
+
+  <!-- Category icons -->
   <div class="d-flex flex-wrap gap-3 align-items-center" id="categoryContainer">
+
     <% 
       const categories = [
         { name: "All", icon: "fa-globe" },
@@ -19,123 +22,182 @@
     %>
 
     <% for (let c of categories) { %>
-      <a href="/listings?category=<%= encodeURIComponent(c.name) %>" 
-         class="category-link <%= (typeof category !== 'undefined' && category === c.name) ? 'active' : '' %>"
-         data-category="<%= c.name %>">
+      <a
+        href="/listings?category=<%= encodeURIComponent(c.name) %>"
+        class="category-link <%= (typeof category !== 'undefined' && category === c.name) ? 'active' : '' %>"
+      >
         <i class="fa-solid <%= c.icon %>"></i>
-        <span class="ms-1"><%= c.name %></span>
+        <span><%= c.name %></span>
       </a>
     <% } %>
   </div>
 
+  <!-- Filters -->
   <div class="d-flex align-items-center gap-3">
+
     <button class="btn btn-outline-dark btn-sm" data-bs-toggle="modal" data-bs-target="#filtersModal">
       <i class="fa-solid fa-sliders me-2"></i>Filters
     </button>
 
     <div class="form-check form-switch ms-2">
-      <input class="form-check-input" type="checkbox" id="taxSwitch" />
-      <label class="form-check-label text-muted" for="taxSwitch">Display total before taxes</label>
+      <input class="form-check-input" type="checkbox" id="taxSwitch">
+      <label class="form-check-label text-muted">Display total before taxes</label>
     </div>
+
   </div>
 </div>
+
+
 
 <!-- Filters Modal -->
 <div class="modal fade" id="filtersModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
-    <form id="filtersForm" class="modal-content">
+    <form method="GET" action="/listings" class="modal-content">
+
       <div class="modal-header">
         <h5 class="modal-title">Filters</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
+
         <div class="mb-3">
-          <label class="form-label">Where (city or country)</label>
-          <input id="filterSearch" name="search" type="text" class="form-control"
-            value="<%= typeof search !== 'undefined' ? search : '' %>">
+          <label class="form-label">Search (city or country)</label>
+          <input
+            name="search"
+            type="text"
+            class="form-control"
+            value="<%= typeof search !== 'undefined' ? search : '' %>"
+          >
         </div>
 
         <div class="row g-3">
+
           <div class="col">
             <label class="form-label">Check-in</label>
-            <input id="filterCheckin" name="checkin" type="date" class="form-control"
-              value="<%= typeof checkin !== 'undefined' ? checkin : '' %>">
+            <input
+              name="checkin"
+              type="date"
+              class="form-control"
+              value="<%= typeof checkin !== 'undefined' ? checkin : '' %>"
+            >
           </div>
+
           <div class="col">
             <label class="form-label">Check-out</label>
-            <input id="filterCheckout" name="checkout" type="date" class="form-control"
-              value="<%= typeof checkout !== 'undefined' ? checkout : '' %>">
+            <input
+              name="checkout"
+              type="date"
+              class="form-control"
+              value="<%= typeof checkout !== 'undefined' ? checkout : '' %>"
+            >
           </div>
+
           <div class="col-4">
             <label class="form-label">Guests</label>
-            <input id="filterGuests" name="guests" type="number" min="1" class="form-control"
-              value="<%= typeof guests !== 'undefined' ? guests : 1 %>">
+            <input
+              name="guests"
+              type="number"
+              min="1"
+              class="form-control"
+              value="<%= typeof guests !== 'undefined' ? guests : 1 %>"
+            >
           </div>
+
         </div>
 
-        <hr class="my-3">
+        <hr>
 
         <div class="row g-3">
+
           <div class="col">
-            <label class="form-label">Min price (₹)</label>
-            <input id="filterMinPrice" name="minPrice" type="number" min="0" class="form-control"
-              value="<%= typeof minPrice !== 'undefined' ? minPrice : '' %>">
+            <label class="form-label">Min Price (₹)</label>
+            <input
+              name="minPrice"
+              type="number"
+              class="form-control"
+              value="<%= typeof minPrice !== 'undefined' ? minPrice : '' %>"
+            >
           </div>
+
           <div class="col">
-            <label class="form-label">Max price (₹)</label>
-            <input id="filterMaxPrice" name="maxPrice" type="number" min="0" class="form-control"
-              value="<%= typeof maxPrice !== 'undefined' ? maxPrice : '' %>">
+            <label class="form-label">Max Price (₹)</label>
+            <input
+              name="maxPrice"
+              type="number"
+              class="form-control"
+              value="<%= typeof maxPrice !== 'undefined' ? maxPrice : '' %>"
+            >
           </div>
+
           <div class="col">
             <label class="form-label">Category</label>
-            <select id="filterCategory" name="category" class="form-select">
+            <select name="category" class="form-select">
               <option value="All">All</option>
+
               <% for (let c of categories) { %>
-                <option value="<%= c.name %>" <%= (typeof category !== 'undefined' && category === c.name) ? 'selected' : '' %>>
+                <option
+                  value="<%= c.name %>"
+                  <%= (typeof category !== 'undefined' && category === c.name) ? 'selected' : '' %>
+                >
                   <%= c.name %>
                 </option>
               <% } %>
+
             </select>
           </div>
+
         </div>
+
       </div>
 
       <div class="modal-footer">
-        <button id="applyFiltersBtn" type="submit" class="btn btn-primary">Apply</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-primary">Apply</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
+
     </form>
   </div>
 </div>
 
-<!-- FIXED LISTINGS GRID (FULL WIDTH + NO ZOOM) -->
-<div class="container-fluid mt-4 px-4">
-  <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" id="listingsGrid">
+
+
+<!-- Listing Grid -->
+<div class="container mt-4 px-3" style="max-width:1200px;">
+
+  <div class="row g-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
 
     <% for (let listing of listings) { %>
+
       <div class="col">
+
         <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none text-dark">
+
           <div class="card border-0 shadow-sm rounded-4 overflow-hidden h-100">
+
             <img
               src="<%= listing.image && listing.image.url ? listing.image.url : 'https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60' %>"
               class="card-img-top"
-              style="height: 15rem; width:100%; object-fit: cover;"
-            />
+              style="height:210px; object-fit:cover;"
+            >
+
             <div class="card-body">
               <h5 class="fw-semibold"><%= listing.title %></h5>
               <p class="text-muted mb-1"><%= listing.location %>, <%= listing.country %></p>
-              <p class="fw-semibold mb-0">
-                ₹<%= listing.price.toLocaleString("en-IN") %> night
-              </p>
-              <p class="small text-muted mb-0">Guests: <%= listing.guests || 1 %></p>
+              <p class="fw-semibold mb-1">₹<%= listing.price.toLocaleString("en-IN") %> night</p>
+              <p class="small text-muted">Guests: <%= listing.guests || 1 %></p>
             </div>
+
           </div>
+
         </a>
+
       </div>
+
     <% } %>
 
   </div>
+
 </div>
 
 <script src="/js/filter.js" defer></script>
