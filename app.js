@@ -2,8 +2,12 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
+
 const express = require("express");
-const app = express();
+const app = express();     // ← app created here
+
+app.locals.MAP_TOKEN = process.env.MAP_TOKEN;   // ← ADD HERE
+
 const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");

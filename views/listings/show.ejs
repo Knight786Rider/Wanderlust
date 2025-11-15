@@ -1,7 +1,7 @@
 <% layout("/layouts/boilerplate") %>
 
 <script>
-  const mapToken = "<%= process.env.MAP_TOKEN %>";
+  const mapToken = "<%= MAP_TOKEN %>";
   const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
   const locationName = "<%= listing.location %>";
 </script>
@@ -14,13 +14,16 @@
       <!-- Listing Card -->
       <div class="card mb-4 shadow-sm border-0">
 
-        <img
-          src="<%= listing.image && listing.image.url
-                  ? listing.image.url
-                  : 'https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60' %>"
-          class="card-img-top"
-          style="height:420px; object-fit:cover;"
-        >
+       <div class="show-image-wrapper">
+  <img
+    src="<%= listing.image && listing.image.url
+            ? listing.image.url
+            : 'https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60' %>"
+    class="show-page-image"
+  >
+</div>
+
+
 
         <div class="card-body p-4">
 
