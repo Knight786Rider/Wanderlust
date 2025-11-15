@@ -6,7 +6,15 @@
   const locationName = "<%= listing.location %>";
 </script>
 
-<div class="show-image-wrapper">
+<div class="container my-5 listing-container" style="max-width:960px;">
+
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+
+      <!-- Listing Card -->
+      <div class="card mb-4 shadow-sm border-0">
+
+       <div class="show-image-wrapper">
   <img
     src="<%= listing.image && listing.image.url
             ? listing.image.url
@@ -16,13 +24,6 @@
 </div>
 
 
-<div class="container my-5 listing-container" style="max-width:960px;">
-
-  <div class="row justify-content-center">
-    <div class="col-lg-10">
-
-      <!-- Listing Card -->
-      <div class="card mb-4 shadow-sm border-0">
 
         <div class="card-body p-4">
 
